@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://db3v5vv0oj1m1"]
+
+[ext_resource type="PackedScene" uid="uid://bp74fu8kno6av" path="res://Blender-to-Godot/Import.glb" id="1_qpiit"]
+
+[sub_resource type="AnimationNodeBlend3" id="AnimationNodeBlend3_gixlv"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_cjoce"]
+graph_offset = Vector2(-466.339, -57.6628)
+nodes/Blend3/node = SubResource("AnimationNodeBlend3_gixlv")
+nodes/Blend3/position = Vector2(80, 160)
+nodes/output/position = Vector2(80, 500)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Import" parent="." instance=ExtResource("1_qpiit")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeBlendTree_cjoce")
+anim_player = NodePath("..")
+parameters/Blend3/blend_amount = -1.0

@@ -1,0 +1,14 @@
+[gd_resource type="StyleBoxFlat" script_class="StyleBoxFlatPlus" load_steps=2 format=3 uid="uid://rexhvu6kal6b"]
+
+[ext_resource type="Script" uid="uid://dns07myv4hs21" path="res://ribbon_demo/Themes/Scripts/StyleBoxFlatPlus.gd" id="1_o4cun"]
+
+[resource]
+bg_color = Color(1, 1, 1, 0.0431373)
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+script = ExtResource("1_o4cun")
+color_type = 1

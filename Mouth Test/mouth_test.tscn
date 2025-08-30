@@ -1,0 +1,329 @@
+[gd_scene load_steps=38 format=3 uid="uid://d08p3yiuntlwh"]
+
+[ext_resource type="Texture2D" uid="uid://dy78jtblpg8nm" path="res://Mouth Test/teeth_placeholder.tres" id="1_31cmi"]
+[ext_resource type="Texture2D" uid="uid://cn1n4fe2kdhtj" path="res://Mouth Test/skin_placeholder.tres" id="2_h2xw8"]
+
+[sub_resource type="GDScript" id="GDScript_vreqa"]
+script/source = "@tool
+extends Node3D
+
+
+var face_material: Material
+@onready var face_placeholder: MeshInstance3D = $Example1/FacePlaceholder
+@onready var mouth_controller: Node3D = $Example1/FacePlaceholder/MouthController
+
+
+
+func _ready() -> void:
+	face_material = face_placeholder.mesh.surface_get_material(0)
+
+
+func _process(_delta: float) -> void:
+	var texture_position: Vector2 = Vector2(
+		-mouth_controller.position.x,
+		-mouth_controller.position.z)
+	texture_position = texture_position / 2.0
+	face_material.set(\"shader_parameter/position\", texture_position)
+"
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_31cmi"]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_h2xw8"]
+source = 5
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_vreqa"]
+parameter_name = "skin_texture"
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_l2t2o"]
+source = 5
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_fbntq"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(1, 1, 1, 1), 2, 0.5]
+op_type = 6
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_1cvxn"]
+parameter_name = "mouth"
+texture_type = 1
+texture_repeat = 2
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_8nt15"]
+default_input_values = [0, 1.0, 1, 0.0]
+operator = 1
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_xq76l"]
+parameter_name = "position"
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_30t7i"]
+default_input_values = [0, Vector2(0, 0), 1, Vector2(0, 0)]
+op_type = 0
+
+[sub_resource type="VisualShader" id="VisualShader_054an"]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform sampler2D skin_texture : source_color;
+uniform vec2 position;
+uniform sampler2D mouth : source_color, repeat_disable;
+
+
+
+void fragment() {
+	vec4 n_out2p0;
+// Texture2D:2
+	n_out2p0 = texture(skin_texture, UV);
+
+
+// Input:10
+	vec2 n_out10p0 = UV;
+
+
+// Vector2Parameter:8
+	vec2 n_out8p0 = position;
+
+
+// VectorOp:9
+	vec2 n_out9p0 = n_out10p0 + n_out8p0;
+
+
+	vec4 n_out4p0;
+// Texture2D:4
+	n_out4p0 = texture(mouth, n_out9p0);
+
+
+// FloatOp:7
+	float n_in7p0 = 1.00000;
+	float n_out7p0 = n_in7p0 - n_out4p0.x;
+
+
+// Mix:5
+	vec4 n_out5p0 = mix(n_out2p0, n_out4p0, n_out7p0);
+
+
+// Output:0
+	ALBEDO = vec3(n_out5p0.xyz);
+
+
+}
+"
+graph_offset = Vector2(-815.822, 122.909)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_h2xw8")
+nodes/fragment/2/position = Vector2(-400, 80)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture2DParameter_vreqa")
+nodes/fragment/3/position = Vector2(-800, -40)
+nodes/fragment/4/node = SubResource("VisualShaderNodeTexture_l2t2o")
+nodes/fragment/4/position = Vector2(-400, 280)
+nodes/fragment/5/node = SubResource("VisualShaderNodeMix_fbntq")
+nodes/fragment/5/position = Vector2(120, 160)
+nodes/fragment/6/node = SubResource("VisualShaderNodeTexture2DParameter_1cvxn")
+nodes/fragment/6/position = Vector2(-800, 520)
+nodes/fragment/7/node = SubResource("VisualShaderNodeFloatOp_8nt15")
+nodes/fragment/7/position = Vector2(-120, 400)
+nodes/fragment/8/node = SubResource("VisualShaderNodeVec2Parameter_xq76l")
+nodes/fragment/8/position = Vector2(-1180, 400)
+nodes/fragment/9/node = SubResource("VisualShaderNodeVectorOp_30t7i")
+nodes/fragment/9/position = Vector2(-680, 260)
+nodes/fragment/10/node = SubResource("VisualShaderNodeInput_31cmi")
+nodes/fragment/10/position = Vector2(-1200, 300)
+nodes/fragment/connections = PackedInt32Array(3, 0, 2, 2, 2, 0, 5, 0, 4, 0, 5, 1, 6, 0, 4, 2, 4, 0, 7, 1, 7, 0, 5, 2, 5, 0, 0, 0, 9, 0, 4, 0, 10, 0, 9, 0, 8, 0, 9, 1)
+
+[sub_resource type="Gradient" id="Gradient_5n5qf"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.44586)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_eenxg"]
+gradient = SubResource("Gradient_5n5qf")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.833333, 0.217949)
+
+[sub_resource type="Gradient" id="Gradient_3juke"]
+colors = PackedColorArray(0.613281, 0.508773, 0.447792, 1, 1, 0.772899, 0.787832, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6uuog"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_flqso"]
+width = 64
+height = 64
+color_ramp = SubResource("Gradient_3juke")
+noise = SubResource("FastNoiseLite_6uuog")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_meusp"]
+render_priority = 0
+shader = SubResource("VisualShader_054an")
+shader_parameter/skin_texture = SubResource("NoiseTexture2D_flqso")
+shader_parameter/position = Vector2(0, 0)
+shader_parameter/mouth = SubResource("GradientTexture2D_eenxg")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_shv6g"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_meusp")
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_empl5"]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_2ris5"]
+source = 5
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_k7bhf"]
+parameter_name = "skin_texture"
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_0djcr"]
+source = 5
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_r2ym8"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(1, 1, 1, 1), 2, 0.5]
+op_type = 6
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_4g4sd"]
+parameter_name = "mouth"
+texture_type = 1
+texture_repeat = 2
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_ivcvv"]
+default_input_values = [0, 1.0, 1, 0.0]
+operator = 1
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_vh7ns"]
+parameter_name = "position"
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_of66p"]
+default_input_values = [0, Vector2(0, 0), 1, Vector2(0, 0)]
+op_type = 0
+
+[sub_resource type="VisualShader" id="VisualShader_1swbd"]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform sampler2D skin_texture : source_color;
+uniform vec2 position;
+uniform sampler2D mouth : source_color, repeat_disable;
+
+
+
+void fragment() {
+	vec4 n_out2p0;
+// Texture2D:2
+	n_out2p0 = texture(skin_texture, UV);
+
+
+// Input:10
+	vec2 n_out10p0 = UV;
+
+
+// Vector2Parameter:8
+	vec2 n_out8p0 = position;
+
+
+// VectorOp:9
+	vec2 n_out9p0 = n_out10p0 + n_out8p0;
+
+
+	vec4 n_out4p0;
+// Texture2D:4
+	n_out4p0 = texture(mouth, n_out9p0);
+
+
+// FloatOp:7
+	float n_in7p0 = 1.00000;
+	float n_out7p0 = n_in7p0 - n_out4p0.x;
+
+
+// Mix:5
+	vec4 n_out5p0 = mix(n_out2p0, n_out4p0, n_out7p0);
+
+
+// Output:0
+	ALBEDO = vec3(n_out5p0.xyz);
+
+
+}
+"
+graph_offset = Vector2(-815.822, 122.909)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_2ris5")
+nodes/fragment/2/position = Vector2(-400, 80)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture2DParameter_k7bhf")
+nodes/fragment/3/position = Vector2(-800, -40)
+nodes/fragment/4/node = SubResource("VisualShaderNodeTexture_0djcr")
+nodes/fragment/4/position = Vector2(-400, 280)
+nodes/fragment/5/node = SubResource("VisualShaderNodeMix_r2ym8")
+nodes/fragment/5/position = Vector2(120, 160)
+nodes/fragment/6/node = SubResource("VisualShaderNodeTexture2DParameter_4g4sd")
+nodes/fragment/6/position = Vector2(-800, 520)
+nodes/fragment/7/node = SubResource("VisualShaderNodeFloatOp_ivcvv")
+nodes/fragment/7/position = Vector2(-120, 400)
+nodes/fragment/8/node = SubResource("VisualShaderNodeVec2Parameter_vh7ns")
+nodes/fragment/8/position = Vector2(-1180, 400)
+nodes/fragment/9/node = SubResource("VisualShaderNodeVectorOp_of66p")
+nodes/fragment/9/position = Vector2(-680, 260)
+nodes/fragment/10/node = SubResource("VisualShaderNodeInput_empl5")
+nodes/fragment/10/position = Vector2(-1200, 300)
+nodes/fragment/connections = PackedInt32Array(3, 0, 2, 2, 2, 0, 5, 0, 4, 0, 5, 1, 6, 0, 4, 2, 4, 0, 7, 1, 7, 0, 5, 2, 5, 0, 0, 0, 9, 0, 4, 0, 10, 0, 9, 0, 8, 0, 9, 1)
+
+[sub_resource type="Gradient" id="Gradient_owb55"]
+colors = PackedColorArray(0.613281, 0.508773, 0.447792, 1, 1, 0.772899, 0.787832, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_la5eq"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_aw1ud"]
+width = 64
+height = 64
+color_ramp = SubResource("Gradient_owb55")
+noise = SubResource("FastNoiseLite_la5eq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hxn1s"]
+render_priority = 0
+shader = SubResource("VisualShader_1swbd")
+shader_parameter/skin_texture = SubResource("NoiseTexture2D_aw1ud")
+shader_parameter/position = Vector2(0.223439, -0.150662)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2sg6m"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_hxn1s")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ffgk"]
+albedo_texture = ExtResource("2_h2xw8")
+uv1_triplanar_sharpness = 0.105113
+
+[sub_resource type="SphereMesh" id="SphereMesh_etlpv"]
+material = SubResource("StandardMaterial3D_2ffgk")
+
+[node name="MouthTest" type="Node3D"]
+script = SubResource("GDScript_vreqa")
+
+[node name="Example1" type="Node3D" parent="."]
+
+[node name="FacePlaceholder" type="MeshInstance3D" parent="Example1"]
+mesh = SubResource("PlaneMesh_shv6g")
+skeleton = NodePath("../..")
+
+[node name="MouthController" type="Node3D" parent="Example1/FacePlaceholder"]
+
+[node name="Example2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.90851, 0, 0)
+
+[node name="FacePlaceholder2" type="MeshInstance3D" parent="Example2"]
+mesh = SubResource("PlaneMesh_2sg6m")
+skeleton = NodePath("../..")
+
+[node name="Decal2" type="Decal" parent="Example2/FacePlaceholder2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0195301, 0, 0.0143231)
+size = Vector3(1, 1, 1)
+texture_albedo = ExtResource("1_31cmi")
+
+[node name="Example3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.97941, 0, 0)
+
+[node name="Head_placeholder" type="MeshInstance3D" parent="Example3"]
+mesh = SubResource("SphereMesh_etlpv")
+skeleton = NodePath("../..")
+
+[node name="Decal (rotated)" type="Decal" parent="Example3/Head_placeholder"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.00221729, 0, 0.543993)
+size = Vector3(1, 1, 1)
+texture_albedo = ExtResource("1_31cmi")

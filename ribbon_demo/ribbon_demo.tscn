@@ -1,0 +1,206 @@
+[gd_scene load_steps=10 format=3 uid="uid://ggk66m7unm7j"]
+
+[ext_resource type="Theme" uid="uid://dmac54gfoovbv" path="res://ribbon_demo/Themes/Office_Theme.tres" id="1_qxwjp"]
+[ext_resource type="Script" uid="uid://cuxl6iwb8l7ft" path="res://ribbon_demo/ribbon_demo.gd" id="2_v835b"]
+[ext_resource type="PackedScene" uid="uid://2kbyomn4oynf" path="res://ribbon_demo/Ribbon/home.tscn" id="2_xjw76"]
+[ext_resource type="Script" uid="uid://bvd2qpiebsiwi" path="res://ribbon_demo/Ribbon/Scripts/ribbon.gd" id="3_kp0bu"]
+[ext_resource type="Script" uid="uid://dns07myv4hs21" path="res://ribbon_demo/Themes/Scripts/StyleBoxFlatPlus.gd" id="4_cl5w2"]
+
+[sub_resource type="GDScript" id="GDScript_fbg72"]
+script/source = "extends Button
+
+var is_fullscreen: bool = false
+
+func _ready() -> void:
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
+		text = \"\"
+	else:
+		text = \"\"
+
+func _on_button_up() -> void:
+	if is_fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		text = \"\"
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		text = \"\"
+	is_fullscreen = !is_fullscreen
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_25ltc"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.768627, 0.168627, 0.109804, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+script = ExtResource("4_cl5w2")
+color_type = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s13ql"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.78, 0.2652, 0.2184, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+script = ExtResource("4_cl5w2")
+color_type = 1
+
+[sub_resource type="GDScript" id="GDScript_mbi53"]
+script/source = "extends Button
+
+func _on_button_up() -> void:
+	get_tree().quit()
+"
+
+[node name="Panel" type="Panel"]
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_qxwjp")
+script = ExtResource("2_v835b")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_qxwjp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 150.0
+grow_horizontal = 2
+theme = ExtResource("1_qxwjp")
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme = ExtResource("1_qxwjp")
+current_tab = 1
+script = ExtResource("3_kp0bu")
+
+[node name="File" parent="VBoxContainer/TabContainer" instance=ExtResource("2_xjw76")]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_qxwjp")
+
+[node name="Home" parent="VBoxContainer/TabContainer" instance=ExtResource("2_xjw76")]
+layout_mode = 2
+theme = ExtResource("1_qxwjp")
+metadata/_tab_index = 1
+
+[node name="Insert" parent="VBoxContainer/TabContainer" instance=ExtResource("2_xjw76")]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_qxwjp")
+metadata/_tab_index = 2
+
+[node name="Layout" parent="VBoxContainer/TabContainer" instance=ExtResource("2_xjw76")]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_qxwjp")
+metadata/_tab_index = 3
+
+[node name="References" parent="VBoxContainer/TabContainer" instance=ExtResource("2_xjw76")]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_qxwjp")
+metadata/_tab_index = 4
+
+[node name="Review" parent="VBoxContainer/TabContainer" instance=ExtResource("2_xjw76")]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_qxwjp")
+metadata/_tab_index = 5
+
+[node name="View" parent="VBoxContainer/TabContainer" instance=ExtResource("2_xjw76")]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_qxwjp")
+metadata/_tab_index = 6
+
+[node name="Ruler" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme = ExtResource("1_qxwjp")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(210, 297)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_qxwjp")
+
+[node name="PageText" type="TextEdit" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("1_qxwjp")
+text = "Lorem Ipsum"
+wrap_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -33.0
+offset_bottom = 33.0
+grow_horizontal = 0
+
+[node name="MinimizeButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(33, 33)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+focus_mode = 0
+theme = ExtResource("1_qxwjp")
+text = ""
+icon_alignment = 1
+expand_icon = true
+
+[node name="WindowedButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(33, 33)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+focus_mode = 0
+theme = ExtResource("1_qxwjp")
+text = ""
+icon_alignment = 1
+expand_icon = true
+script = SubResource("GDScript_fbg72")
+
+[node name="ExitButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(33, 33)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+focus_mode = 0
+theme = ExtResource("1_qxwjp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_25ltc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s13ql")
+text = ""
+icon_alignment = 1
+expand_icon = true
+script = SubResource("GDScript_mbi53")
+
+[connection signal="gui_input" from="VBoxContainer/TabContainer" to="VBoxContainer/TabContainer" method="_on_gui_input"]
+[connection signal="mouse_entered" from="VBoxContainer/TabContainer" to="VBoxContainer/TabContainer" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/TabContainer" to="VBoxContainer/TabContainer" method="_on_mouse_exited"]
+[connection signal="button_up" from="HBoxContainer/WindowedButton" to="HBoxContainer/WindowedButton" method="_on_button_up"]
+[connection signal="button_up" from="HBoxContainer/ExitButton" to="HBoxContainer/ExitButton" method="_on_button_up"]

@@ -1,0 +1,12 @@
+[gd_resource type="StyleBoxFlat" script_class="StyleBoxFlatPlus" load_steps=2 format=3 uid="uid://b4ws2rednhi8a"]
+
+[ext_resource type="Script" uid="uid://dns07myv4hs21" path="res://ribbon_demo/Themes/Scripts/StyleBoxFlatPlus.gd" id="1_pwgnm"]
+
+[resource]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.878431, 0.878431, 0.878431, 1)
+script = ExtResource("1_pwgnm")
+color_type = 0

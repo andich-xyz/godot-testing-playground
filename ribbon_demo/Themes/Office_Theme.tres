@@ -1,0 +1,77 @@
+[gd_resource type="Theme" script_class="ThemePlus" load_steps=13 format=3 uid="uid://dmac54gfoovbv"]
+
+[ext_resource type="StyleBox" uid="uid://b4ws2rednhi8a" path="res://ribbon_demo/Themes/Style_Boxes/Flat_Main.tres" id="1_yowdj"]
+[ext_resource type="Script" uid="uid://dns07myv4hs21" path="res://ribbon_demo/Themes/Scripts/StyleBoxFlatPlus.gd" id="2_eqr6n"]
+[ext_resource type="StyleBox" uid="uid://bdgpql066jg8g" path="res://ribbon_demo/Themes/Style_Boxes/Flat_Button_Accent.tres" id="3_ibk86"]
+[ext_resource type="StyleBox" uid="uid://rexhvu6kal6b" path="res://ribbon_demo/Themes/Style_Boxes/Flat_Button_Accent_Pressed.tres" id="4_2rne5"]
+[ext_resource type="Script" uid="uid://b76hfujuib0te" path="res://ribbon_demo/Themes/Scripts/ThemePlus.gd" id="4_o4lb7"]
+[ext_resource type="StyleBox" uid="uid://cqvwmdwpi8jkg" path="res://ribbon_demo/Themes/Style_Boxes/Flat_Disabled_Cornered.tres" id="4_r0k8u"]
+[ext_resource type="FontFile" uid="uid://4rdkcg2ykdbi" path="res://ribbon_demo/Fonts/Material_Symbols_Rounded/MaterialSymbolsRounded-VariableFont_FILL,GRAD,opsz,wght.ttf" id="5_llitp"]
+[ext_resource type="StyleBox" uid="uid://dpspk8nwxb6ce" path="res://ribbon_demo/Themes/Style_Boxes/Flat_Main_Cornered.tres" id="5_n4oyw"]
+[ext_resource type="StyleBox" uid="uid://cyaxvbesfmeg6" path="res://ribbon_demo/Themes/Style_Boxes/Flat_Accent_Margins.tres" id="5_ty6ml"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehafu"]
+bg_color = Color(1, 1, 1, 0.0745098)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+script = ExtResource("2_eqr6n")
+color_type = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8m2dw"]
+script = ExtResource("2_eqr6n")
+color_type = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0meaq"]
+content_margin_left = 14.0
+bg_color = Color(1, 1, 1, 1)
+script = ExtResource("2_eqr6n")
+color_type = 4
+
+[resource]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+Button/colors/icon_focus_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+Button/constants/align_to_largest_stylebox = 0
+Button/constants/h_separation = 4
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 16
+Button/fonts/font = ExtResource("5_llitp")
+Button/styles/focus = ExtResource("3_ibk86")
+Button/styles/hover = SubResource("StyleBoxFlat_ehafu")
+Button/styles/hover_mirrored = null
+Button/styles/hover_pressed_mirrored = null
+Button/styles/normal = ExtResource("3_ibk86")
+Button/styles/normal_mirrored = null
+Button/styles/pressed = ExtResource("4_2rne5")
+Panel/styles/panel = ExtResource("1_yowdj")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_8m2dw")
+TabContainer/colors/font_selected_color = Color(0.177995, 0.254986, 0.6, 1)
+TabContainer/constants/side_margin = 0
+TabContainer/styles/normal = ExtResource("5_ty6ml")
+TabContainer/styles/panel = ExtResource("1_yowdj")
+TabContainer/styles/tab_disabled = ExtResource("5_ty6ml")
+TabContainer/styles/tab_focus = ExtResource("5_n4oyw")
+TabContainer/styles/tab_hovered = ExtResource("4_r0k8u")
+TabContainer/styles/tab_selected = ExtResource("5_n4oyw")
+TabContainer/styles/tab_unselected = ExtResource("5_ty6ml")
+TabContainer/styles/tabbar_background = ExtResource("5_ty6ml")
+TextEdit/colors/font_color = Color(0, 0, 0, 1)
+TextEdit/font_sizes/font_size = 16
+TextEdit/styles/normal = SubResource("StyleBoxFlat_0meaq")
+script = ExtResource("4_o4lb7")
+main_color = Color(0.878, 0.878, 0.878, 1)
+accent_color = Color(0.178, 0.255, 0.6, 1)
+highlight_color = Color(1, 1, 1, 1)
+diabled_color = Color(1, 1, 1, 0.118)
+page_color = Color(1, 1, 1, 1)
